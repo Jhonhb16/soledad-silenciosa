@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>The Natural Protocol — Calma Total</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#f0f4f8;min-height:100vh}
+.app{max-width:430px;margin:0 auto;background:#fff;font-family:'Inter',sans-serif;color:#0f1f2e;min-height:100vh}
+.login-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;background:#fff}
+.login-logo{width:56px;height:56px;border-radius:16px;background:#06b6d4;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}
+.login-title{font-size:24px;font-weight:700;color:#0f1f2e;margin-bottom:6px;text-align:center}
+.login-sub{font-size:14px;color:#64748b;text-align:center;line-height:1.6;margin-bottom:28px}
+.login-hero{width:100%;border-radius:18px;background:linear-gradient(155deg,#0f2744,#061830);padding:20px;margin-bottom:28px;text-align:center}
+.login-hero-tag{display:inline-block;background:rgba(6,182,212,0.2);color:#06b6d4;font-size:10px;letter-spacing:1.5px;padding:4px 12px;border-radius:20px;margin-bottom:10px;border:1px solid rgba(6,182,212,0.3);font-weight:600}
+.login-hero-h{font-size:20px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:6px}
+.login-hero-h span{color:#06b6d4}
+.login-hero-p{font-size:12px;color:#94b8d0;line-height:1.5}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:15px;border:1.5px solid #e2e8f0;background:#fff;border-radius:14px;cursor:pointer;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:#0f1f2e;margin-bottom:12px}
+.google-icon{width:20px;height:20px}
+.login-note{font-size:11px;color:#94a3b8;text-align:center;line-height:1.5}
+.topbar{background:#fff;padding:14px 20px 10px;border-bottom:1px solid #e8f0f8;position:sticky;top:0;z-index:10;display:none}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.app-logo{display:flex;align-items:center;gap:8px}
+.logo-icon{width:26px;height:26px;border-radius:8px;background:#06b6d4;display:flex;align-items:center;justify-content:center;font-size:12px}
+.app-title{font-size:14px;font-weight:700;color:#0f1f2e}
+.step-count{font-size:11px;color:#64748b;background:#f1f5f9;padding:3px 10px;border-radius:20px}
+.prog-wrap{background:#e8f7fa;border-radius:20px;height:4px}
+.prog-bar{height:4px;background:#06b6d4;border-radius:20px;transition:width 0.4s;width:0%}
+.prog-row{display:flex;justify-content:space-between;margin-top:4px}
+.prog-lbl{font-size:10px;color:#94a3b8}
+.prog-pct{font-size:10px;color:#06b6d4;font-weight:600}
+.main-content{display:none;padding-bottom:80px}
+.hero-card{margin:16px;border-radius:18px;background:linear-gradient(155deg,#0f2744 0%,#0a1f3d 55%,#061830 100%);padding:24px 20px 22px;position:relative;overflow:hidden}
+.hero-card::after{content:'';position:absolute;bottom:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,0.2) 0%,transparent 70%)}
+.hero-tag{display:inline-block;background:rgba(6,182,212,0.2);color:#06b6d4;font-size:10px;letter-spacing:1.5px;padding:4px 12px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(6,182,212,0.3);font-weight:600}
+.hero-h1{font-size:22px;font-weight:700;color:#fff;line-height:1.25;margin-bottom:8px}
+.hero-h1 span{color:#06b6d4}
+.hero-user{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.hero-avatar{width:36px;height:36px;border-radius:50%;border:2px solid rgba(6,182,212,0.4)}
+.hero-welcome{font-size:12px;color:#94b8d0}
+.hero-welcome strong{color:#fff;display:block;font-size:14px}
+.hero-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:#06b6d4;color:#fff;font-size:14px;font-weight:600;padding:13px;border-radius:12px;border:none;cursor:pointer;font-family:'Inter',sans-serif;width:100%}
+.problem-section{padding:16px 16px 4px}
+.problem-title{font-size:18px;font-weight:700;color:#0f1f2e;margin-bottom:12px}
+.problem-item{display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:12px;padding:11px 14px;margin-bottom:8px;border:1px solid #e8f0f8}
+.problem-icon{width:34px;height:34px;border-radius:10px;background:#fee2e2;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.problem-text{font-size:13px;color:#334155;line-height:1.4}
+.causa-card{margin:8px 16px 0;background:#f0fdff;border-radius:14px;padding:14px;border:1px solid #a5f3fc}
+.causa-label{font-size:10px;color:#0e7490;font-weight:600;letter-spacing:1px;margin-bottom:5px}
+.causa-title{font-size:14px;font-weight:700;color:#0f1f2e;margin-bottom:5px}
+.causa-desc{font-size:12px;color:#64748b;line-height:1.6}
+.snav{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;border-bottom:1px solid #e8f0f8;scrollbar-width:none}
+.snav::-webkit-scrollbar{display:none}
+.snav-btn{flex-shrink:0;padding:5px 13px;border-radius:20px;border:1px solid #e2e8f0;background:#f8fafc;color:#64748b;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all 0.2s}
+.snav-btn.active{background:#06b6d4;border-color:#06b6d4;color:#fff;font-weight:600}
+.snav-btn.done{background:#e0f7fa;border-color:#67e8f9;color:#0e7490;font-weight:500}
+.snav-btn.done::after{content:' ✓';font-size:10px}
+.sem-block{display:none;animation:fi 0.2s ease}
+.sem-block.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sem-hdr{padding:18px 16px 12px}
+.sem-tag{display:inline-block;background:#e0f7fa;color:#0e7490;font-size:10px;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:8px;font-weight:600}
+.sem-title{font-size:21px;font-weight:700;color:#0f1f2e;line-height:1.2;margin-bottom:5px}
+.sem-title em{font-style:normal;color:#06b6d4}
+.sem-desc{font-size:13px;color:#64748b;line-height:1.6}
+.sem-prog-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.sem-pb-wrap{flex:1;background:#e0f7fa;border-radius:10px;height:4px}
+.sem-pb{height:4px;background:#06b6d4;border-radius:10px;transition:width 0.3s;width:0%}
+.sem-pl{font-size:11px;color:#94a3b8;white-space:nowrap}
+.step-card{margin:0 16px 10px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;transition:border-color 0.2s}
+.step-card.checked{border-color:#67e8f9;background:#f0fdff}
+.step-head{display:flex;align-items:flex-start;gap:12px;padding:13px 13px 11px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cb{width:22px;height:22px;border-radius:50%;border:2px solid #cbd5e1;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-top:1px}
+.cb.checked{background:#06b6d4;border-color:#06b6d4}
+.cb svg{display:none}
+.cb.checked svg{display:block}
+.sinfo{flex:1}
+.snum{font-size:10px;color:#94a3b8;letter-spacing:1px;margin-bottom:2px;font-weight:600}
+.stitle{font-size:14px;font-weight:600;color:#0f1f2e;line-height:1.35}
+.step-card.checked .stitle{color:#94a3b8;text-decoration:line-through;text-decoration-color:#67e8f9}
+.sarrow{font-size:13px;color:#cbd5e1;transition:transform 0.2s;margin-top:2px}
+.sarrow.open{transform:rotate(180deg);color:#06b6d4}
+.sbody{padding:0 13px 13px 47px;display:none}
+.sbody.open{display:block}
+.sdesc{font-size:13px;color:#475569;line-height:1.7;margin-bottom:8px}
+.sdesc strong{color:#0f1f2e;font-weight:600}
+.sdesc em{color:#0891b2;font-style:normal;font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tg{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500}
+.tg-g{background:#e0f7fa;color:#0e7490;border:1px solid #a5f3fc}
+.tg-b{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+.tg-r{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.nota{background:#fffbeb;border-left:3px solid #f59e0b;padding:8px 10px;border-radius:0 8px 8px 0;margin-top:8px;font-size:12px;color:#92400e;line-height:1.55}
+.warn{background:#fff1f2;border-left:3px solid #f43f5e;padding:8px 10px;border-radius:0 8px 8px 0;margin-top:8px;font-size:12px;color:#9f1239;line-height:1.55}
+.nota strong,.warn strong{font-weight:600}
+.nav-row{display:flex;gap:10px;padding:14px 16px 0}
+.btn-p{flex:1;padding:12px;border:1.5px solid #e2e8f0;background:#fff;color:#64748b;font-family:'Inter',sans-serif;font-size:13px;border-radius:12px;cursor:pointer;font-weight:500}
+.btn-p:disabled{opacity:0.3;cursor:default}
+.btn-n{flex:2;padding:12px;border:none;background:#06b6d4;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;border-radius:12px;cursor:pointer}
+.finish{padding:28px 16px;text-align:center;display:none}
+.finish.show{display:block}
+.finish-icon{width:56px;height:56px;border-radius:50%;background:#e0f7fa;border:2px solid #06b6d4;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px}
+.finish-title{font-size:20px;font-weight:700;color:#0f1f2e;margin-bottom:6px}
+.finish-sub{font-size:13px;color:#64748b;line-height:1.7}
+.finish-sub strong{color:#0891b2}
+.page-section{padding:0;display:none}
+.page-section.active{display:block}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;padding:0 16px}
+.stat-card{background:#f8fafc;border-radius:14px;padding:14px;border:1px solid #e2e8f0;text-align:center}
+.stat-num{font-size:28px;font-weight:700;color:#06b6d4;line-height:1}
+.stat-label{font-size:11px;color:#64748b;margin-top:4px;line-height:1.4}
+.prog-week-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-bottom:10px}
+.pwc-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pwc-title{font-size:13px;font-weight:600;color:#0f1f2e}
+.pwc-pct{font-size:13px;font-weight:600;color:#06b6d4}
+.pwc-bar-wrap{background:#e8f7fa;border-radius:10px;height:6px}
+.pwc-bar{height:6px;border-radius:10px;background:#06b6d4;transition:width 0.4s}
+.pwc-steps{font-size:11px;color:#94a3b8;margin-top:5px}
+.motiv-card{background:linear-gradient(135deg,#0f2744,#0a3d5c);border-radius:14px;padding:16px;margin-bottom:12px;text-align:center}
+.motiv-emoji{font-size:28px;margin-bottom:8px}
+.motiv-text{font-size:14px;font-weight:600;color:#fff;line-height:1.5}
+.motiv-sub{font-size:12px;color:#7ab8d4;margin-top:4px}
+.racha-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:14px}
+.racha-icon{width:44px;height:44px;border-radius:12px;background:#fff7ed;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.racha-num{font-size:22px;font-weight:700;color:#f59e0b;line-height:1}
+.racha-label{font-size:12px;color:#64748b;margin-top:2px}
+.profile-header{background:linear-gradient(155deg,#0f2744,#061830);padding:24px 16px 20px}
+.profile-avatar-wrap{display:flex;align-items:center;gap:14px}
+.profile-avatar{width:56px;height:56px;border-radius:50%;border:3px solid rgba(6,182,212,0.5)}
+.profile-avatar-ph{width:56px;height:56px;border-radius:50%;background:#1a3a5a;border:3px solid rgba(6,182,212,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;color:#06b6d4;font-weight:700}
+.profile-name{font-size:18px;font-weight:700;color:#fff}
+.profile-email{font-size:12px;color:#7ab8d4;margin-top:2px}
+.profile-section{padding:16px}
+.profile-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;margin-bottom:12px}
+.profile-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid #f1f5f9}
+.profile-row:last-child{border-bottom:none}
+.profile-row-label{font-size:13px;color:#64748b}
+.profile-row-value{font-size:13px;font-weight:600;color:#0f1f2e}
+.profile-row-value.cyan{color:#06b6d4}
+.nervioso-selector{display:flex;gap:8px;padding:12px 16px}
+.nerv-btn{flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #e2e8f0;background:#f8fafc;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-align:center;color:#64748b;transition:all 0.2s;line-height:1.5}
+.nerv-btn.active-exc{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.nerv-btn.active-pas{background:#e0f7fa;border-color:#67e8f9;color:#0e7490}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px}
+.toggle-label{font-size:13px;color:#0f1f2e;font-weight:500}
+.toggle-sub{font-size:11px;color:#94a3b8;margin-top:1px}
+.toggle{width:44px;height:24px;border-radius:12px;background:#e2e8f0;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;border:none}
+.toggle.on{background:#06b6d4}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left 0.2s}
+.toggle.on::after{left:23px}
+.btn-signout{width:100%;padding:13px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer;margin-top:4px}
+.bot-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid #e8f0f8;padding:8px 0 14px;display:none;justify-content:space-around;z-index:10}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 16px;border-radius:8px;border:none;background:transparent;font-family:'Inter',sans-serif}
+.bnav-item.active .bnav-icon,.bnav-item.active .bnav-lbl{color:#06b6d4}
+.bnav-icon{font-size:20px;color:#cbd5e1}
+.bnav-lbl{font-size:10px;color:#94a3b8;font-weight:600;letter-spacing:0.5px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- LOGIN -->
+<div class="login-page" id="login-page">
+  <div class="login-logo">🛡</div>
+  <div class="login-title">Protocolo Calma Total</div>
+  <div class="login-sub">Tu método natural guiado para eliminar ansiedad, depresión y ataques de pánico desde la raíz.</div>
+  <div class="login-hero">
+    <div class="login-hero-tag">MÉTODO 100% NATURAL</div>
+    <div class="login-hero-h">Elimina la ansiedad de raíz. <span>Sin fármacos.</span></div>
+    <div class="login-hero-p">Protocolo guiado basado en el eje intestino-cerebro y el metabolismo.</div>
+  </div>
+  <button class="btn-google" onclick="loginGoogle()">
+    <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+    Continuar con Google
+  </button>
+  <div class="login-note">Tu progreso se guarda de forma segura en tu cuenta de Google.</div>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar" id="topbar">
+  <div class="topbar-row">
+    <div class="app-logo"><div class="logo-icon">🛡</div><div class="app-title">The Natural Protocol</div></div>
+    <div class="step-count" id="sc">0 / 15</div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="pb"></div></div>
+  <div class="prog-row"><span class="prog-lbl" id="pl">Comenzando</span><span class="prog-pct" id="pp">0%</span></div>
+</div>
+
+<!-- MAIN -->
+<div class="main-content" id="main-content">
+
+  <!-- HOME -->
+  <div id="home-page">
+    <div class="hero-card">
+      <div class="hero-tag">MÉTODO 100% NATURAL</div>
+      <div class="hero-user">
+        <img class="hero-avatar" id="hero-avatar" src="" style="display:none">
+        <div><div class="hero-welcome">Bienvenido de vuelta<strong id="hero-name">—</strong></div></div>
+      </div>
+      <div class="hero-h1">Elimina la ansiedad y el pánico de raíz. <span>Sin fármacos.</span></div>
+      <div style="font-size:13px;color:#94b8d0;line-height:1.6;margin-bottom:16px">Protocolo Natural Guiado para recuperar tu calma de forma definitiva.</div>
+      <button class="hero-btn" onclick="showTab('protocolo')">Continuar el Protocolo →</button>
+    </div>
+    <div class="problem-section">
+      <div class="problem-title">¿Sientes que el pánico controla tu vida?</div>
+      <div class="problem-item"><div class="problem-icon">💗</div><div class="problem-text">Palpitaciones y opresión constante en el pecho</div></div>
+      <div class="problem-item"><div class="problem-icon">🧠</div><div class="problem-text">Pensamientos acelerados que no puedes detener</div></div>
+      <div class="problem-item"><div class="problem-icon">😰</div><div class="problem-text">Ataques de pánico que aparecen sin razón</div></div>
+      <div class="problem-item"><div class="problem-icon">😴</div><div class="problem-text">Agotamiento extremo aunque no hagas nada</div></div>
+      <div class="problem-item"><div class="problem-icon">💊</div><div class="problem-text">Has probado pastillas y terapias sin resultados</div></div>
+    </div>
+    <div class="causa-card">
+      <div class="causa-label">LA CAUSA REAL</div>
+      <div class="causa-title">El 90% de la serotonina se produce en el intestino</div>
+      <div class="causa-desc">Microbiota dañada + metabolismo desregulado = sistema nervioso en modo alerta permanente. Este protocolo lo corrige desde la raíz.</div>
+    </div>
+    <div style="padding:14px 16px"><button class="hero-btn" onclick="showTab('protocolo')" style="background:#0f1f2e">Comenzar el Protocolo →</button></div>
+  </div>
+
+  <!-- PROTOCOLO -->
+  <div id="protocolo-page" style="display:none">
+    <div class="snav">
+      <button class="snav-btn active" onclick="go(0)" id="snav0">Inicio</button>
+      <button class="snav-btn" onclick="go(1)" id="snav1">Semana 1</button>
+      <button class="snav-btn" onclick="go(2)" id="snav2">Semana 2</button>
+      <button class="snav-btn" onclick="go(3)" id="snav3">Semana 3</button>
+      <button class="snav-btn" onclick="go(4)" id="snav4">Semana 4</button>
+    </div>
+    <div class="sem-block active" id="s0">
+      <div class="sem-hdr"><div class="sem-tag">BIENVENIDO</div><div class="sem-title">Antes de <em>comenzar</em></div><div class="sem-desc">Sigue los pasos en orden. La constancia vale más que la perfección.</div></div>
+      <div class="step-card" id="c0-0"><div class="step-head" onclick="toggleStep('0-0')"><div class="cb" id="cb0-0" onclick="chk(event,'0-0',0,0)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PREREQ 01</div><div class="stitle">Exámenes de sangre iniciales</div></div><div class="sarrow" id="ar0-0">▾</div></div><div class="sbody" id="sb0-0"><div class="sdesc">Solicita: <strong>TSH, Anti TPO, Anti Tiroglobulinas, Prolactina, Vitamina D 25 OH, PTH, Vitamina B12 y Homocisteína.</strong><br><br>Detectan hipotiroidismo oculto y deficiencias que causan ansiedad.</div><div class="tags"><span class="tg tg-b">TSH</span><span class="tg tg-b">Vitamina B12</span><span class="tg tg-b">Vitamina D</span></div></div></div>
+      <div class="step-card" id="c0-1"><div class="step-head" onclick="toggleStep('0-1')"><div class="cb" id="cb0-1" onclick="chk(event,'0-1',0,1)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PREREQ 02</div><div class="stitle">Identifica tu sistema nervioso</div></div><div class="sarrow" id="ar0-1">▾</div></div><div class="sbody" id="sb0-1"><div class="sdesc"><strong>Excitado:</strong> ansiedad, palpitaciones, insomnio, pensamientos acelerados.<br><br><strong>Pasivo:</strong> depresión, apatía, fatiga extrema, sin motivación.</div><div class="tags"><span class="tg tg-r">Excitado → calmar</span><span class="tg tg-g">Pasivo → activar</span></div></div></div>
+      <div class="nav-row"><button class="btn-p" disabled>← Anterior</button><button class="btn-n" onclick="go(1)">Semana 1 →</button></div>
+    </div>
+    <div class="sem-block" id="s1">
+      <div class="sem-hdr"><div class="sem-tag">SEMANA 1</div><div class="sem-title">Preparar el <em>cuerpo</em></div><div class="sem-desc">Suplementos base y cambio de alimentación.</div><div class="sem-prog-row"><div class="sem-pb-wrap"><div class="sem-pb" id="spb1"></div></div><div class="sem-pl" id="spl1">0/3</div></div></div>
+      <div class="step-card" id="c1-0"><div class="step-head" onclick="toggleStep('1-0')"><div class="cb" id="cb1-0" onclick="chk(event,'1-0',1,0)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 01</div><div class="stitle">Magnesium + Lysine</div></div><div class="sarrow" id="ar1-0">▾</div></div><div class="sbody" id="sb1-0"><div class="sdesc">Tomar <strong>2 cápsulas cada noche</strong> de forma indefinida. Calma el sistema nervioso a nivel celular.</div><div class="tags"><span class="tg tg-g">Noche</span><span class="tg tg-g">Continuo</span><span class="tg tg-b">2 cápsulas</span></div></div></div>
+      <div class="step-card" id="c1-1"><div class="step-head" onclick="toggleStep('1-1')"><div class="cb" id="cb1-1" onclick="chk(event,'1-1',1,1)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 02</div><div class="stitle">Vitamina D3 + MK4</div></div><div class="sarrow" id="ar1-1">▾</div></div><div class="sbody" id="sb1-1"><div class="sdesc">Tomar <strong>1 cápsula por la mañana</strong> hasta terminar el frasco. La D3 regula el estado de ánimo — deficiencia directamente ligada a depresión.</div><div class="tags"><span class="tg tg-g">Mañana</span><span class="tg tg-b">1 frasco</span></div></div></div>
+      <div class="step-card" id="c1-2"><div class="step-head" onclick="toggleStep('1-2')"><div class="cb" id="cb1-2" onclick="chk(event,'1-2',1,2)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 03</div><div class="stitle">Cambio de alimentación — Fase 1</div></div><div class="sarrow" id="ar1-2">▾</div></div><div class="sbody" id="sb1-2"><div class="sdesc">Eliminar: <em>lácteos, granos, cereales y semillas.</em><br><strong>Sí comes:</strong> papa, yuca, plátano, frutas, huevos, vegetales, proteína animal.</div><div class="tags"><span class="tg tg-r">Sin lácteos</span><span class="tg tg-r">Sin granos</span><span class="tg tg-g">Proteína ✓</span></div></div></div>
+      <div class="nav-row"><button class="btn-p" onclick="go(0)">← Anterior</button><button class="btn-n" onclick="go(2)">Semana 2 →</button></div>
+    </div>
+    <div class="sem-block" id="s2">
+      <div class="sem-hdr"><div class="sem-tag">SEMANA 2</div><div class="sem-title">Atacar las <em>infecciones</em></div><div class="sem-desc">Protocolos antimicrobianos y jugos terapéuticos.</div><div class="sem-prog-row"><div class="sem-pb-wrap"><div class="sem-pb" id="spb2"></div></div><div class="sem-pl" id="spl2">0/4</div></div></div>
+      <div class="step-card" id="c2-0"><div class="step-head" onclick="toggleStep('2-0')"><div class="cb" id="cb2-0" onclick="chk(event,'2-0',2,0)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 04</div><div class="stitle">B COMP + CoQ10</div></div><div class="sarrow" id="ar2-0">▾</div></div><div class="sbody" id="sb2-0"><div class="sdesc">Tomar <strong>2 cápsulas por la mañana.</strong> Iniciar <em>3 días después del Magnesio.</em> Produce serotonina y dopamina.<br><strong>Días 1-2: solo 1 cápsula.</strong></div><div class="tags"><span class="tg tg-g">Mañana</span><span class="tg tg-b">Día 4</span></div><div class="nota"><strong>Orden:</strong> 3 días después del Magnesio. Primeros 2 días 1 cápsula.</div></div></div>
+      <div class="step-card" id="c2-1"><div class="step-head" onclick="toggleStep('2-1')"><div class="cb" id="cb2-1" onclick="chk(event,'2-1',2,1)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 05</div><div class="stitle">Jugos de Zanahoria — 5x5</div></div><div class="sarrow" id="ar2-1">▾</div></div><div class="sbody" id="sb2-1"><div class="sdesc">Tomar <strong>1.25 litros diarios por 14 días.</strong> Extractor obligatorio. Antiinflamatorio y antiparasitario natural.</div><div class="tags"><span class="tg tg-b">Extractor</span><span class="tg tg-b">1.25 L/día</span><span class="tg tg-b">14 días</span></div><div class="warn"><strong>No tomar si:</strong> diabetes descontrolada · Prednisona 10mg+ · insuficiencia renal · embarazo.</div></div></div>
+      <div class="step-card" id="c2-2"><div class="step-head" onclick="toggleStep('2-2')"><div class="cb" id="cb2-2" onclick="chk(event,'2-2',2,2)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 06</div><div class="stitle">Ormux — Aceite de Orégano</div></div><div class="sarrow" id="ar2-2">▾</div></div><div class="sbody" id="sb2-2"><div class="sdesc">Tomar <strong>1 medida media mañana y 1 media tarde.</strong> Iniciar <em>2 días después del B COMP.</em><br>Elimina hongos y bacterias que bloquean la serotonina.<br><em>Mínimo 4 meses. 1 semana pausa entre frascos.</em></div><div class="tags"><span class="tg tg-g">Media mañana</span><span class="tg tg-g">Media tarde</span><span class="tg tg-b">4 meses mín.</span></div></div></div>
+      <div class="step-card" id="c2-3"><div class="step-head" onclick="toggleStep('2-3')"><div class="cb" id="cb2-3" onclick="chk(event,'2-3',2,3)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 07</div><div class="stitle">Selenium + MAX T3</div></div><div class="sarrow" id="ar2-3">▾</div></div><div class="sbody" id="sb2-3"><div class="sdesc">Tomar <strong>1 cápsula al medio día.</strong> Iniciar <em>2 días después del Ormux.</em> Apoya la tiroides y potencia el Ormux.</div><div class="tags"><span class="tg tg-g">Medio día</span><span class="tg tg-b">1 frasco</span></div><div class="warn"><strong>Suspender si:</strong> dolor de cabeza · vértigo · sabor a metal.</div></div></div>
+      <div class="nav-row"><button class="btn-p" onclick="go(1)">← Anterior</button><button class="btn-n" onclick="go(3)">Semana 3 →</button></div>
+    </div>
+    <div class="sem-block" id="s3">
+      <div class="sem-hdr"><div class="sem-tag">SEMANA 3</div><div class="sem-title">Reparar y <em>fortalecer</em></div><div class="sem-desc">Repara la mucosa intestinal y el sistema nervioso.</div><div class="sem-prog-row"><div class="sem-pb-wrap"><div class="sem-pb" id="spb3"></div></div><div class="sem-pl" id="spl3">0/4</div></div></div>
+      <div class="step-card" id="c3-0"><div class="step-head" onclick="toggleStep('3-0')"><div class="cb" id="cb3-0" onclick="chk(event,'3-0',3,0)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 08</div><div class="stitle">Oregano Oil puro</div></div><div class="sarrow" id="ar3-0">▾</div></div><div class="sbody" id="sb3-0"><div class="sdesc">Tomar <strong>3 gotas por la mañana</strong> durante 3 semanas, pausar 3. Iniciar <em>2 días después del Selenio.</em></div><div class="tags"><span class="tg tg-b">3 gotas/mañana</span><span class="tg tg-b">3 sem / 3 pausa</span></div></div></div>
+      <div class="step-card" id="c3-1"><div class="step-head" onclick="toggleStep('3-1')"><div class="cb" id="cb3-1" onclick="chk(event,'3-1',3,1)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 09</div><div class="stitle">BRAIN — Soporte neurológico</div></div><div class="sarrow" id="ar3-1">▾</div></div><div class="sbody" id="sb3-1"><div class="sdesc">Tomar <strong>hasta 6 cápsulas/día.</strong> Escala: Día 1: ½ → Día 2: 1 → Sem 2: 2 → hasta 6.</div><div class="tags"><span class="tg tg-b">Gradual</span><span class="tg tg-b">Hasta 6/día</span></div><div class="nota"><strong>Crisis curativa:</strong> pausar 2 días, retomar desde ¼.</div></div></div>
+      <div class="step-card" id="c3-2"><div class="step-head" onclick="toggleStep('3-2')"><div class="cb" id="cb3-2" onclick="chk(event,'3-2',3,2)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 10</div><div class="stitle">INTESTINES — Reparación intestinal</div></div><div class="sarrow" id="ar3-2">▾</div></div><div class="sbody" id="sb3-2"><div class="sdesc">Tomar <strong>6 cápsulas/día</strong> desde el <em>día 8.</em> Mínimo <strong>4 frascos.</strong><br>Escala: Día 1: 2 → Día 2: 4 → Día 3+: 6.</div><div class="tags"><span class="tg tg-g">Desde día 8</span><span class="tg tg-g">6/día</span><span class="tg tg-b">4 frascos</span></div></div></div>
+      <div class="step-card" id="c3-3"><div class="step-head" onclick="toggleStep('3-3')"><div class="cb" id="cb3-3" onclick="chk(event,'3-3',3,3)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 11</div><div class="stitle">NAC + SE — Antioxidante celular</div></div><div class="sarrow" id="ar3-3">▾</div></div><div class="sbody" id="sb3-3"><div class="sdesc">Tomar <strong>1 cápsula 2 veces/día.</strong> Produce glutatión y desintoxica neuronas.<br><em>Primeros 3 días: 1 sola cápsula.</em></div><div class="tags"><span class="tg tg-g">2 veces/día</span><span class="tg tg-b">Gradual</span></div></div></div>
+      <div class="nav-row"><button class="btn-p" onclick="go(2)">← Anterior</button><button class="btn-n" onclick="go(4)">Semana 4 →</button></div>
+    </div>
+    <div class="sem-block" id="s4">
+      <div class="sem-hdr"><div class="sem-tag">SEMANA 4</div><div class="sem-title">Estabilizar el <em>metabolismo</em></div><div class="sem-desc">Hábitos y alimentación para salir del modo alerta permanente.</div><div class="sem-prog-row"><div class="sem-pb-wrap"><div class="sem-pb" id="spb4"></div></div><div class="sem-pl" id="spl4">0/4</div></div></div>
+      <div class="step-card" id="c4-0"><div class="step-head" onclick="toggleStep('4-0')"><div class="cb" id="cb4-0" onclick="chk(event,'4-0',4,0)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 12</div><div class="stitle">Alimentación metabólica</div></div><div class="sarrow" id="ar4-0">▾</div></div><div class="sbody" id="sb4-0"><div class="sdesc">Picos de azúcar = cortisol = pánico. <strong>Reglas:</strong> proteína en cada comida · grasas buenas · cada 3–4h · sin azúcar ni harinas.</div><div class="tags"><span class="tg tg-b">Proteína siempre</span><span class="tg tg-b">Cada 3–4h</span><span class="tg tg-r">Sin azúcar</span></div></div></div>
+      <div class="step-card" id="c4-1"><div class="step-head" onclick="toggleStep('4-1')"><div class="cb" id="cb4-1" onclick="chk(event,'4-1',4,1)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 13</div><div class="stitle">Rutina diaria completa</div></div><div class="sarrow" id="ar4-1">▾</div></div><div class="sbody" id="sb4-1"><div class="sdesc"><strong>Mañana:</strong> luz solar 10 min · agua · desayuno proteico.<br><strong>Día:</strong> cada 3–4h · caminar 20–30 min.<br><strong>Noche:</strong> sin pantallas 1h antes · cena ligera · 7–8h sueño.</div><div class="tags"><span class="tg tg-b">Luz solar</span><span class="tg tg-b">Caminar</span><span class="tg tg-b">7–8h sueño</span></div></div></div>
+      <div class="step-card" id="c4-2"><div class="step-head" onclick="toggleStep('4-2')"><div class="cb" id="cb4-2" onclick="chk(event,'4-2',4,2)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 14</div><div class="stitle">Fermentados diarios</div></div><div class="sarrow" id="ar4-2">▾</div></div><div class="sbody" id="sb4-2"><div class="sdesc">Al menos <strong>1 fermentado/día.</strong> Repueblan el intestino mientras Ormux elimina patógenos.</div><div class="tags"><span class="tg tg-g">Kéfir</span><span class="tg tg-g">Yogur natural</span><span class="tg tg-g">Chucrut</span><span class="tg tg-g">Kimchi</span></div></div></div>
+      <div class="step-card" id="c4-3"><div class="step-head" onclick="toggleStep('4-3')"><div class="cb" id="cb4-3" onclick="chk(event,'4-3',4,3)"><svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1,5 4,8 9,2" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><div class="sinfo"><div class="snum">PASO 15</div><div class="stitle">Hipnosis regresiva (complementario)</div></div><div class="sarrow" id="ar4-3">▾</div></div><div class="sbody" id="sb4-3"><div class="sdesc">Libera memorias traumáticas que mantienen el sistema nervioso activado. Con hipnoterapeuta capacitado.</div><div class="tags"><span class="tg tg-b">Opcional</span><span class="tg tg-b">Con profesional</span></div></div></div>
+      <div class="finish" id="finish"><div class="finish-icon">✓</div><div class="finish-title">¡Protocolo completado!</div><div class="finish-sub">Continúa con Magnesium (permanente), Ormux (4 meses+), INTESTINES (4 frascos+) y hábitos diarios.<br><br><strong>Tu cuerpo sabe sanar. Solo necesitaba lo que siempre necesitó.</strong></div></div>
+      <div class="nav-row" style="margin-bottom:16px"><button class="btn-p" onclick="go(3)">← Anterior</button><button class="btn-n" style="background:#0891b2">Completar ✓</button></div>
+    </div>
+  </div>
+
+  <!-- PROGRESO -->
+  <div class="page-section" id="progreso-page">
+    <div style="padding:18px 16px 8px"><div style="font-size:20px;font-weight:700;color:#0f1f2e;margin-bottom:3px">Mi Progreso</div><div style="font-size:12px;color:#64748b" id="prog-fecha">Protocolo iniciado: —</div></div>
+    <div style="padding:0 16px 8px">
+      <div class="motiv-card"><div class="motiv-emoji" id="motiv-emoji">🌱</div><div class="motiv-text" id="motiv-text">¡Empieza hoy tu transformación!</div><div class="motiv-sub" id="motiv-sub">Cada paso cuenta</div></div>
+      <div class="stat-grid" style="padding:0;margin-bottom:12px">
+        <div class="stat-card"><div class="stat-num" id="stat-done">0</div><div class="stat-label">Pasos completados</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-pend">15</div><div class="stat-label">Pasos pendientes</div></div>
+      </div>
+      <div class="racha-card"><div class="racha-icon">🔥</div><div><div class="racha-num" id="racha-num">0</div><div class="racha-label">días de racha consecutiva</div></div></div>
+      <div style="font-size:13px;font-weight:600;color:#0f1f2e;margin-bottom:10px">Progreso por semana</div>
+      <div class="prog-week-card"><div class="pwc-row"><div class="pwc-title">Prerequisitos</div><div class="pwc-pct" id="pw0-pct">0%</div></div><div class="pwc-bar-wrap"><div class="pwc-bar" id="pw0-bar" style="width:0%"></div></div><div class="pwc-steps" id="pw0-steps">0 de 2 pasos</div></div>
+      <div class="prog-week-card"><div class="pwc-row"><div class="pwc-title">Semana 1 — Preparar el cuerpo</div><div class="pwc-pct" id="pw1-pct">0%</div></div><div class="pwc-bar-wrap"><div class="pwc-bar" id="pw1-bar" style="width:0%"></div></div><div class="pwc-steps" id="pw1-steps">0 de 3 pasos</div></div>
+      <div class="prog-week-card"><div class="pwc-row"><div class="pwc-title">Semana 2 — Atacar infecciones</div><div class="pwc-pct" id="pw2-pct">0%</div></div><div class="pwc-bar-wrap"><div class="pwc-bar" id="pw2-bar" style="width:0%"></div></div><div class="pwc-steps" id="pw2-steps">0 de 4 pasos</div></div>
+      <div class="prog-week-card"><div class="pwc-row"><div class="pwc-title">Semana 3 — Reparar y fortalecer</div><div class="pwc-pct" id="pw3-pct">0%</div></div><div class="pwc-bar-wrap"><div class="pwc-bar" id="pw3-bar" style="width:0%"></div></div><div class="pwc-steps" id="pw3-steps">0 de 4 pasos</div></div>
+      <div class="prog-week-card"><div class="pwc-row"><div class="pwc-title">Semana 4 — Estabilizar metabolismo</div><div class="pwc-pct" id="pw4-pct">0%</div></div><div class="pwc-bar-wrap"><div class="pwc-bar" id="pw4-bar" style="width:0%"></div></div><div class="pwc-steps" id="pw4-steps">0 de 4 pasos</div></div>
+    </div>
+  </div>
+
+  <!-- PERFIL -->
+  <div class="page-section" id="perfil-page">
+    <div class="profile-header">
+      <div class="profile-avatar-wrap">
+        <img id="profile-avatar-img" src="" style="display:none" class="profile-avatar">
+        <div id="profile-avatar-ph" class="profile-avatar-ph">?</div>
+        <div><div class="profile-name" id="profile-name">—</div><div class="profile-email" id="profile-email">—</div></div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-card">
+        <div class="profile-row"><div class="profile-row-label">Fecha de inicio</div><div class="profile-row-value cyan" id="perfil-fecha">No iniciado</div></div>
+        <div class="profile-row"><div class="profile-row-label">Pasos completados</div><div class="profile-row-value cyan" id="perfil-pasos">0 / 15</div></div>
+        <div class="profile-row"><div class="profile-row-label">Progreso total</div><div class="profile-row-value cyan" id="perfil-pct">0%</div></div>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:#0f1f2e;margin-bottom:8px">Tipo de sistema nervioso</div>
+      <div class="profile-card">
+        <div class="nervioso-selector">
+          <button class="nerv-btn" id="nerv-exc" onclick="setNervioso('excitado')">⚡ Excitado<br><span style="font-size:10px;font-weight:400">Ansioso, insomnio</span></button>
+          <button class="nerv-btn" id="nerv-pas" onclick="setNervioso('pasivo')">🌊 Pasivo<br><span style="font-size:10px;font-weight:400">Depresión, fatiga</span></button>
+        </div>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:#0f1f2e;margin:12px 0 8px">Recordatorio diario</div>
+      <div class="profile-card">
+        <div class="toggle-row">
+          <div><div class="toggle-label">Recordatorio diario</div><div class="toggle-sub">Te recuerda seguir el protocolo</div></div>
+          <button class="toggle" id="toggle-notif" onclick="toggleNotif()"></button>
+        </div>
+        <div class="profile-row" id="notif-hora-row" style="display:none">
+          <div class="profile-row-label">Hora</div>
+          <input type="time" id="notif-hora" value="08:00" style="border:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#06b6d4;background:transparent;cursor:pointer" onchange="saveNotifHora()">
+        </div>
+      </div>
+      <button class="btn-signout" onclick="signOutUser()">Cerrar sesión</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOT NAV -->
+<div class="bot-nav" id="bot-nav">
+  <button class="bnav-item active" id="bnav-home" onclick="showTab('home')"><div class="bnav-icon">⌂</div><div class="bnav-lbl">INICIO</div></button>
+  <button class="bnav-item" id="bnav-protocolo" onclick="showTab('protocolo')"><div class="bnav-icon">☰</div><div class="bnav-lbl">PROTOCOLO</div></button>
+  <button class="bnav-item" id="bnav-progreso" onclick="showTab('progreso')"><div class="bnav-icon">◎</div><div class="bnav-lbl">PROGRESO</div></button>
+  <button class="bnav-item" id="bnav-perfil" onclick="showTab('perfil')"><div class="bnav-icon">👤</div><div class="bnav-lbl">PERFIL</div></button>
+</div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut as fbSignOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyApxl1OmOgtPXtk69r7pk5iqz11EowHI8o",
+  authDomain: "calma-total.firebaseapp.com",
+  projectId: "calma-total",
+  storageBucket: "calma-total.firebasestorage.app",
+  messagingSenderId: "990204252850",
+  appId: "1:990204252850:web:327296150c9413606aafab"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+const provider = new GoogleAuthProvider();
+
+var sizes = [2,3,4,4,4];
+var state = [[false,false],[false,false,false],[false,false,false,false],[false,false,false,false],[false,false,false,false]];
+var userData = { nervioso:null, notif:false, notifHora:'08:00', fechaInicio:null, racha:0, lastLogin:null };
+var currentUser = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('topbar').style.display = 'block';
+    document.getElementById('main-content').style.display = 'block';
+    document.getElementById('bot-nav').style.display = 'flex';
+    await loadData(user.uid);
+    setUserUI(user);
+    window._upd();
+  } else {
+    currentUser = null;
+    document.getElementById('login-page').style.display = 'flex';
+    document.getElementById('topbar').style.display = 'none';
+    document.getElementById('main-content').style.display = 'none';
+    document.getElementById('bot-nav').style.display = 'none';
+  }
+});
+
+async function loadData(uid) {
+  try {
+    const snap = await getDoc(doc(db,'users',uid));
+    const hoy = new Date().toISOString().split('T')[0];
+    if (snap.exists()) {
+      const d = snap.data();
+      if (d.state) state = d.state;
+      if (d.userData) userData = {...userData,...d.userData};
+      if (!userData.fechaInicio) userData.fechaInicio = hoy;
+      const diff = userData.lastLogin ? (new Date(hoy)-new Date(userData.lastLogin))/86400000 : 999;
+      if (diff===1) userData.racha=(userData.racha||0)+1;
+      else if (diff>1) userData.racha=1;
+    } else {
+      userData.fechaInicio = hoy;
+      userData.racha = 1;
+    }
+    userData.lastLogin = hoy;
+    await save();
+    for (var s=0;s<sizes.length;s++) for (var i=0;i<sizes[s];i++) if (state[s][i]) {
+      var cb=document.getElementById('cb'+s+'-'+i), card=document.getElementById('c'+s+'-'+i);
+      if(cb) cb.classList.add('checked');
+      if(card) card.classList.add('checked');
+    }
+    if (userData.nervioso) setNerviosoUI(userData.nervioso);
+    if (userData.notif) { document.getElementById('toggle-notif').classList.add('on'); document.getElementById('notif-hora-row').style.display='flex'; }
+    if (userData.notifHora) document.getElementById('notif-hora').value = userData.notifHora;
+  } catch(e) { console.log(e); }
+}
+
+async function save() {
+  if (!currentUser) return;
+  try { await setDoc(doc(db,'users',currentUser.uid),{state,userData},{merge:true}); }
+  catch(e) { console.log(e); }
+}
+
+function setUserUI(user) {
+  var first = user.displayName ? user.displayName.split(' ')[0] : 'Usuario';
+  document.getElementById('hero-name').textContent = first;
+  document.getElementById('profile-name').textContent = user.displayName || 'Usuario';
+  document.getElementById('profile-email').textContent = user.email || '';
+  if (user.photoURL) {
+    document.getElementById('hero-avatar').src = user.photoURL;
+    document.getElementById('hero-avatar').style.display = 'block';
+    document.getElementById('profile-avatar-img').src = user.photoURL;
+    document.getElementById('profile-avatar-img').style.display = 'block';
+    document.getElementById('profile-avatar-ph').style.display = 'none';
+  } else {
+    document.getElementById('profile-avatar-ph').textContent = (user.displayName||'U')[0].toUpperCase();
+  }
+}
+
+function setNerviosoUI(tipo) {
+  document.getElementById('nerv-exc').className='nerv-btn'+(tipo==='excitado'?' active-exc':'');
+  document.getElementById('nerv-pas').className='nerv-btn'+(tipo==='pasivo'?' active-pas':'');
+}
+
+window.loginGoogle = async function() {
+  try { await signInWithPopup(auth, provider); }
+  catch(e) { alert('Error: '+e.message); }
+};
+
+window.signOutUser = async function() {
+  if (confirm('¿Cerrar sesión?')) await fbSignOut(auth);
+};
+
+window.chk = async function(e,id,s,i) {
+  e.stopPropagation();
+  state[s][i] = !state[s][i];
+  var cb=document.getElementById('cb'+id), card=document.getElementById('c'+id);
+  if(state[s][i]){cb.classList.add('checked');card.classList.add('checked');}
+  else{cb.classList.remove('checked');card.classList.remove('checked');}
+  window._upd();
+  await save();
+};
+
+window.setNervioso = async function(tipo) {
+  userData.nervioso=tipo; setNerviosoUI(tipo); await save();
+};
+
+window.toggleNotif = async function() {
+  userData.notif=!userData.notif;
+  var t=document.getElementById('toggle-notif'), r=document.getElementById('notif-hora-row');
+  if(userData.notif){t.classList.add('on');r.style.display='flex';}
+  else{t.classList.remove('on');r.style.display='none';}
+  await save();
+};
+
+window.saveNotifHora = async function() {
+  userData.notifHora=document.getElementById('notif-hora').value; await save();
+};
+
+window._upd = function() {
+  var ts=0,done=0;
+  for(var s=0;s<sizes.length;s++) for(var i=0;i<sizes[s];i++){ts++;if(state[s][i])done++;}
+  var pct=Math.round(done/ts*100);
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('pp').textContent=pct+'%';
+  document.getElementById('sc').textContent=done+' / '+ts;
+  var lbls=['Comenzando','Semana 1','Semana 2','Semana 3','Semana 4'];
+  document.getElementById('pl').textContent=pct===100?'¡Completado!':lbls[Math.min(window._cur||0,4)];
+  for(var s=0;s<sizes.length;s++){
+    var sd=0; for(var i=0;i<sizes[s];i++) if(state[s][i]) sd++;
+    var sp=Math.round(sd/sizes[s]*100);
+    ['spb'+s,'pw'+s+'-bar'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.width=sp+'%';});
+    var pl=document.getElementById('spl'+s); if(pl) pl.textContent=sd+'/'+sizes[s];
+    var pp=document.getElementById('pw'+s+'-pct'); if(pp) pp.textContent=sp+'%';
+    var ps=document.getElementById('pw'+s+'-steps'); if(ps) ps.textContent=sd+' de '+sizes[s]+' pasos';
+    var nb=document.getElementById('snav'+s); if(nb){if(sd===sizes[s])nb.classList.add('done');else nb.classList.remove('done');}
+  }
+  document.getElementById('stat-done').textContent=done;
+  document.getElementById('stat-pend').textContent=ts-done;
+  document.getElementById('perfil-pasos').textContent=done+' / '+ts;
+  document.getElementById('perfil-pct').textContent=pct+'%';
+  document.getElementById('racha-num').textContent=userData.racha||0;
+  if(userData.fechaInicio){
+    var fd=new Date(userData.fechaInicio+'T12:00:00');
+    var fs=fd.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+    document.getElementById('prog-fecha').textContent='Protocolo iniciado: '+fs;
+    document.getElementById('perfil-fecha').textContent=fs;
+  }
+  var em,tx,sb2;
+  if(pct===0){em='🌱';tx='¡Empieza hoy tu transformación!';sb2='Tu cuerpo está listo para sanar';}
+  else if(pct<25){em='🚀';tx='¡Excelente inicio! Vas por buen camino';sb2='Cada paso importa';}
+  else if(pct<50){em='💪';tx='¡Increíble! Ya vas a la mitad';sb2='Tu sistema nervioso ya responde';}
+  else if(pct<75){em='🔥';tx='¡En racha! Más de la mitad completado';sb2='El intestino ya está sanando';}
+  else if(pct<100){em='⭐';tx='¡La recta final! Casi lo logras';sb2='Tu cuerpo te lo agradecerá siempre';}
+  else{em='🏆';tx='¡Protocolo completado! Lo lograste';sb2='Eres un ejemplo de constancia';}
+  document.getElementById('motiv-emoji').textContent=em;
+  document.getElementById('motiv-text').textContent=tx;
+  document.getElementById('motiv-sub').textContent=sb2;
+  if(pct===100) document.getElementById('finish').classList.add('show');
+};
+</script>
+
+<script>
+window._cur = 0;
+
+window.toggleStep = function(id){
+  var sb=document.getElementById('sb'+id),ar=document.getElementById('ar'+id);
+  if(!sb)return;
+  var o=sb.classList.contains('open');
+  document.querySelectorAll('.sbody').forEach(function(x){x.classList.remove('open')});
+  document.querySelectorAll('.sarrow').forEach(function(x){x.classList.remove('open')});
+  if(!o){sb.classList.add('open');ar.classList.add('open');}
+};
+
+window.go = function(n){
+  document.querySelectorAll('.sem-block').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('s'+n).classList.add('active');
+  for(var i=0;i<=4;i++){var nb=document.getElementById('snav'+i);if(nb)nb.classList.toggle('active',i===n);}
+  window._cur=n; window.scrollTo(0,0);
+};
+
+window.showTab = function(tab){
+  document.getElementById('home-page').style.display='none';
+  document.getElementById('protocolo-page').style.display='none';
+  document.getElementById('progreso-page').classList.remove('active');
+  document.getElementById('perfil-page').classList.remove('active');
+  document.querySelectorAll('.bnav-item').forEach(function(b){b.classList.remove('active')});
+  if(tab==='home'){document.getElementById('home-page').style.display='block';document.getElementById('bnav-home').classList.add('active');}
+  else if(tab==='protocolo'){document.getElementById('protocolo-page').style.display='block';document.getElementById('bnav-protocolo').classList.add('active');}
+  else if(tab==='progreso'){document.getElementById('progreso-page').classList.add('active');document.getElementById('bnav-progreso').classList.add('active');if(window._upd)window._upd();}
+  else if(tab==='perfil'){document.getElementById('perfil-page').classList.add('active');document.getElementById('bnav-perfil').classList.add('active');}
+  window.scrollTo(0,0);
+};
+</script>
+</body>
+</html>
