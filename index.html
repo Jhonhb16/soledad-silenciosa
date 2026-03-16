@@ -1,512 +1,59 @@
-
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>De la Soledad a la Serenidad</title>
-    <style>
-        /* General Styles */
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #fdfdfd;
-        }
-        h1, h2, h3 {
-            margin-top: 0;
-            font-weight: bold;
-        }
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            /* Use flexbox layout so that sections can be reordered with the order property. */
-            display: flex;
-            flex-direction: column;
-        }
-        .hero {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 0;
-            /* Place the hero after all other sections using the order property. */
-            order: 5;
-        }
-        .hero-text {
-            flex: 1 1 500px;
-            padding-right: 20px;
-            animation: slideInLeft 1s ease-out forwards;
-        }
-        .hero-image {
-            flex: 1 1 400px;
-            text-align: center;
-        }
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.5s ease-out forwards;
-        }
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        .cta-btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
-            color: #2c3e50;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        /* Feature Section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-            /* Position the features after the quiz */
-            order: 2;
-        }
-        .feature-item {
-            background: #fff;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            color: #ff9a9e;
-        }
-        .bonus {
-            margin-top: 60px;
-            background: #f9f9f9;
-            padding: 40px;
-            border-radius: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-            /* Position the bonus section after the features */
-            order: 3;
-        }
-        .bonus-text {
-            flex: 1 1 400px;
-            padding-right: 20px;
-        }
-        .bonus h2 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        .bonus-image {
-            flex: 1 1 350px;
-            text-align: center;
-        }
-        .bonus-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .price-section {
-            margin-top: 60px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-            /* Position the price section after the bonus */
-            order: 4;
-        }
-        .price-section h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        .price-section p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        /* Quiz Section Styles */
-        .hidden { display: none; }
-        .quiz-section {
-            margin-top: 60px;
-            background: #fff;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease;
-            /* Position the quiz as the first section in the flex container */
-            order: 1;
-        }
-        .quiz-section h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .question p {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .options label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 1rem;
-            color: #555;
-        }
-        .quiz-result {
-            margin-top: 20px;
-            font-size: 1.1rem;
-            color: #2c3e50;
-            font-weight: bold;
-        }
-
-        /* Animations */
-        @keyframes slideInLeft {
-            0% { opacity: 0; transform: translateX(-50px); }
-            100% { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        .in-view {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            /* Apply a soft gradient background on mobile to make the page feel lighter */
-            body {
-                background: linear-gradient(180deg, #fff4f6 0%, #ffffff 100%);
-            }
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                /* Provide more space above the tagline on small screens */
-                padding-top: 40px;
-            }
-            .hero-text, .hero-image {
-                padding: 0;
-                margin-bottom: 20px;
-            }
-            .bonus {
-                flex-direction: column;
-                text-align: center;
-            }
-            .bonus-text, .bonus-image {
-                padding: 0;
-                margin-bottom: 20px;
-            }
-
-            /* Make quiz more comfortable on mobile */
-            .quiz-section {
-                padding: 25px;
-                margin-top: 40px;
-                /* Subtle tinted background and soft shadow to lift the quiz card on mobile */
-                background: #fff9f9;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            }
-            .quiz-section h2 {
-                font-size: 1.5rem;
-            }
-            .question p {
-                font-size: 1rem;
-            }
-            .options {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .options label {
-                margin-bottom: 5px;
-                width: 100%;
-                font-size: 0.95rem;
-            }
-            /* Make CTA buttons full width on small screens */
-            .cta-btn {
-                display: block;
-                width: 100%;
-                max-width: none;
-                margin: 12px auto;
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            /* Stack features in a single column */
-            .features {
-                grid-template-columns: 1fr;
-            }
-            /* Increase space between sections on mobile for a breathing layout */
-            .features,
-            .bonus,
-            .price-section {
-                margin-top: 50px;
-            }
-            /* Ensure CTA buttons have generous tappable area on mobile */
-            .cta-btn {
-                padding: 15px 25px;
-                font-size: 1.1rem;
-            }
-            /* Ensure feature items have spacing */
-            .feature-item {
-                margin-bottom: 25px;
-            }
-            .feature-item h3 {
-                font-size: 1.2rem;
-            }
-            .feature-item p {
-                font-size: 1rem;
-            }
-            .feature-icon {
-                font-size: 50px;
-            }
-            /* Center text in price section */
-            .price-section {
-                text-align: center;
-            }
-            .price-section h2 {
-                font-size: 1.8rem;
-            }
-            .price-section p {
-                font-size: 1rem;
-            }
-            /* Adjust hero text sizes on mobile */
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            /* Adjust bonus section text sizes */
-            .bonus h2 {
-                font-size: 1.6rem;
-            }
-            .bonus p {
-                font-size: 1rem;
-            }
-
-            /* Fine‑tune hero text on small screens: extra spacing and side margins for readability */
-            .hero p {
-                line-height: 1.45;
-                margin-left: 15px;
-                margin-right: 15px;
-            }
-
-            /* Improve price section spacing on mobile to feel like a standalone card */
-            .price-section {
-                padding: 30px 20px;
-            }
-            .price-section h2 {
-                margin-bottom: 15px;
-            }
-        }
-        /* Responsive adjustments for the hero image on mobile screens */
-        @media (max-width: 767px) {
-            .hero-image img {
-                width: 70%;
-                margin: 0 auto;
-            }
-        }
-    </style>
-    <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '4064150883874679');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=4064150883874679&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Protocolo</title>
+  <meta name="description" content="Landing mobile basada en imágenes con botón hacia checkout." />
+  <style>
+    :root{
+      --bg:#f6f1eb;
+      --button:#557a2f;
+      --button-text:#ffffff;
+      --shadow:0 10px 30px rgba(0,0,0,.10);
+      --max-mobile:480px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif}
+    body{display:flex;justify-content:center}
+    .page{width:100%;max-width:var(--max-mobile);background:var(--bg)}
+    .section-image{display:block;width:100%;height:auto;margin:0;padding:0}
+    .checkout-wrap{padding:14px 14px 18px;background:var(--bg)}
+    .checkout-link{
+      display:flex;align-items:center;justify-content:center;
+      width:100%;min-height:58px;padding:16px 20px;
+      border-radius:999px;text-decoration:none;
+      background:var(--button);color:var(--button-text);
+      font-size:20px;font-weight:700;letter-spacing:.3px;
+      box-shadow:var(--shadow);
+      text-align:center;
+    }
+    .checkout-link:active{transform:translateY(1px)}
+    .spacer{height:8px;background:var(--bg)}
+    @media (min-width: 481px){
+      body{background:#eae2d8}
+      .page{box-shadow:0 0 0 1px rgba(0,0,0,.03), 0 20px 60px rgba(0,0,0,.10)}
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <section class="hero hidden">
-            <div class="hero-text">
-                <h1>De la Soledad a la Serenidad</h1>
-                <p>La guía que ya está ayudando a cientos de personas a reconectar consigo mismas. 7 pasos sencillos para dejar atrás la sensación de vacío.</p>
-            <!-- Updated CTA to direct users to the payment page -->
-            <a href="https://pay.hotmart.com/G102423406L" class="cta-btn">Descarga ahora por $5</a>
-            </div>
-            <div class="hero-image">
-                <img src="portada.png">      </div>
-        </section>
-        <section class="quiz-section" id="quiz">
-            <h2>¿Te identificas con estos síntomas?</h2>
-            <div class="question">
-                <p>1. ¿Te sientes solo/a a pesar de tener gente a tu alrededor?</p>
-                <div class="options">
-                    <label><input type="radio" name="q1" value="si"> Sí</label>
-                    <label><input type="radio" name="q1" value="av"> A veces</label>
-                    <label><input type="radio" name="q1" value="no"> No</label>
-                </div>
-            </div>
-            <div class="question">
-                <p>2. ¿Sientes que no tienes con quién hablar de tus preocupaciones?</p>
-                <div class="options">
-                    <label><input type="radio" name="q2" value="si"> Sí</label>
-                    <label><input type="radio" name="q2" value="av"> A veces</label>
-                    <label><input type="radio" name="q2" value="no"> No</label>
-                </div>
-            </div>
-            <div class="question">
-                <p>3. ¿Te cuesta disfrutar de tu propia compañía?</p>
-                <div class="options">
-                    <label><input type="radio" name="q3" value="si"> Sí</label>
-                    <label><input type="radio" name="q3" value="av"> A veces</label>
-                    <label><input type="radio" name="q3" value="no"> No</label>
-                </div>
-            </div>
-            <div class="question">
-                <p>4. ¿Sueles ocultar tus emociones por miedo a ser juzgado/a?</p>
-                <div class="options">
-                    <label><input type="radio" name="q4" value="si"> Sí</label>
-                    <label><input type="radio" name="q4" value="av"> A veces</label>
-                    <label><input type="radio" name="q4" value="no"> No</label>
-                </div>
-            </div>
-            <button id="quiz-submit" class="cta-btn" type="button">Ver mi resultado</button>
-            <div id="quiz-result" class="quiz-result"></div>
-        </section>
-        <section class="features hidden" id="features">
-            <div class="feature-item">
-                <div class="feature-icon">💡</div>
-                <h3>Acciones Diarias</h3>
-                <p>Pequeños ejercicios de 5 minutos que puedes hacer en cualquier momento del día.</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🧘</div>
-                <h3>Apoyo Emocional</h3>
-                <p>Consejos reales para afrontar los momentos de vacío y fortalecer tu autoestima.</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🔊</div>
-                <h3>Audio Calmante</h3>
-                <p>Incluye un audio de acompañamiento de 3 minutos para calmar la mente cuando lo necesites.</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🌍</div>
-                <h3>Conexión Real</h3>
-                <p>Estrategias para conectar con personas y actividades auténticas, más allá de las redes sociales.</p>
-            </div>
-        </section>
-        <section class="bonus hidden" id="bonus">
-            <div class="bonus-text">
-                <h2>Bonus Exclusivo</h2>
-                <p>Al adquirir la guía, obtienes un audio guiado de 3 minutos diseñado para ayudarte en los momentos más difíciles. Simplemente presiona play, cierra los ojos y deja que la calma llegue a ti.</p>
-                <p style="margin-top:10px;"><strong>¡Es como tener una mano amiga siempre a tu lado!</strong></p>
-            </div>
-            <div class="bonus-image">
-                <img src="bonus.png">     </div>
-        </section>
-        <section class="price-section hidden" id="precio">
-            <h2>Precio Accesible</h2>
-            <p>Todo el contenido por solo <strong>$5 USD</strong>. Menos de lo que gastas en un café, pero con resultados que ya están transformando la vida de quienes lo aplican.</p>
-            <!-- Updated call-to-action to emphasise downloading the guide -->
-            <!-- Updated CTA to direct users to the payment page -->
-            <a href="https://pay.hotmart.com/G102423406L" class="cta-btn">Descarga tu guía ahora</a>
-        </section>
-    </div>
-    <script>
-        // Intersection Observer to animate sections on scroll
-        document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting) {
-                        entry.target.classList.add('in-view');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-            document.querySelectorAll('.features, .bonus, .price-section, .quiz-section, .hero').forEach(section => {
-                observer.observe(section);
-            });
-        });
-    
-        // Quiz Evaluation
-        const quizButton = document.getElementById('quiz-submit');
-        if (quizButton) {
-            quizButton.addEventListener('click', function() {
-                let score = 0;
-                const responses = document.querySelectorAll('.quiz-section input[type="radio"]:checked');
-                responses.forEach(resp => {
-                    if (resp.value === 'si') score += 2;
-                    else if (resp.value === 'av') score += 1;
-                });
-                const resultEl = document.getElementById('quiz-result');
-                if (resultEl) {
-                    if (score >= 3) {
-                        // Mensaje cuando las respuestas indican que la persona podría estar experimentando soledad silenciosa
-                        resultEl.innerHTML =
-                            '<p><strong>Por tus respuestas, podrías estar viviendo lo que llamamos soledad silenciosa.</strong></p>' +
-                            '<p>Ignorar estos síntomas puede agravar la situación. La soledad prolongada se asocia con ansiedad, depresión, trastornos del sueño e incluso un mayor riesgo de problemas cardiovasculares y deterioro cognitivo. También puede afectar tus relaciones y tu motivación diaria.</p>' +
-                            '<p>Es importante tomar medidas cuanto antes para reconectar contigo mismo y evitar que la soledad se vuelva crónica.</p>' +
-                            '<p><em>Descubre "Adiós a la Soledad Silenciosa", la guía que ya está ayudando a cientos de personas a reconectar consigo mismas. Son 7 pasos sencillos para dejar atrás la sensación de vacío.</em></p>' +
-                            '<a href="#precio" class="cta-btn">Quiero mi guía</a>';
-                    } else {
-                        // Mensaje cuando las respuestas no indican una soledad severa
-                        resultEl.innerHTML =
-                            '<p>Tus respuestas no indican que estés pasando por una soledad grave en este momento.</p>' +
-                            '<p>Aun así, pequeños sentimientos de desconexión pueden aumentar con el tiempo si no los atiendes. Fortalecer tu bienestar emocional desde ahora te ayudará a prevenir la soledad futura y a sentirte mejor en tu día a día.</p>' +
-                            '<p>La guía te brinda pasos sencillos para cuidarte a ti mismo antes de que el problema crezca.</p>' +
-                            '<p><em>Conoce "Adiós a la Soledad Silenciosa": 7 pasos sencillos para reconectar contigo mismo y dejar atrás la sensación de vacío.</em></p>' +
-                            '<a href="#precio" class="cta-btn">Quiero mi guía</a>';
-                    }
-                    // Reveal solution sections (features, bonus, price and hero)
-                    document.querySelectorAll('.features.hidden, .bonus.hidden, .price-section.hidden, .hero.hidden').forEach(section => {
-                        section.classList.remove('hidden');
-                    });
-                }
-            });
-        }
+  <!--
+    CAMBIA ESTE LINK POR TU CHECKOUT REAL.
+    También puedes cambiar el texto del botón abajo.
+  -->
+  <div class="page">
+    <img class="section-image" src="01-hero.png" alt="Hero del protocolo" />
+    <img class="section-image" src="02-problema.png" alt="Problema" />
+    <img class="section-image" src="03-explicacion.png" alt="Explicación" />
+    <img class="section-image" src="04-protocolo.png" alt="Protocolo sencillo" />
 
-    </script>
+    <div class="checkout-wrap">
+      <a class="checkout-link" href="https://TU-CHECKOUT-AQUI.com" target="_blank" rel="noopener noreferrer nofollow">
+        ACCEDER AL PROTOCOLO
+      </a>
+    </div>
+
+    <img class="section-image" src="05-resultados-cta.png" alt="Resultados y llamada a la acción" />
+  </div>
 </body>
 </html>
